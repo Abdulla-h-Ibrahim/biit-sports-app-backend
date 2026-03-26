@@ -7,13 +7,9 @@ var logger = require('morgan');
 var dotenv = require("dotenv")
 dotenv.config();
 
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
 const authRoutes = require('./routes/authRoutes')
-
-const connectDB = require("./config/databaseConnection")
-connectDB();
-
+const testRoutes = require("./routes/testRoute")
+const healthRoutes = require("./routes/healthRoute")
 
 var app = express();
 
@@ -27,9 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-app.use('/biit/sports', authRoutes)
+
+app.use('/biit/sports/auth', authRoutes)
+app.use('/biit/sports/test', testRoutes)
+app.use('/biit/sports/health', healthRoutes)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
