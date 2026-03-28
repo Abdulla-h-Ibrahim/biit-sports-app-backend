@@ -12,6 +12,7 @@ const testRoutes = require("./routes/testRoute")
 const healthRoutes = require("./routes/healthRoute")
 
 const userRoutes = require('./routes/userRoutes')
+const sportRoutes = require('./routes/sportRoutes');
 
 var app = express();
 
@@ -31,7 +32,7 @@ app.use('/biit/sports/test', testRoutes)
 app.use('/biit/sports/health', healthRoutes)
 
 app.use('/biit/sports/users', userRoutes)
-
+app.use('/api/sports', sportRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
