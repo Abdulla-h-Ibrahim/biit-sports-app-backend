@@ -7,6 +7,9 @@ var logger = require('morgan');
 var dotenv = require("dotenv")
 dotenv.config();
 
+const connectDB = require('./config/databaseConnection');
+connectDB();
+
 const authRoutes = require('./routes/authRoutes')
 const testRoutes = require("./routes/testRoute")
 const healthRoutes = require("./routes/healthRoute")
