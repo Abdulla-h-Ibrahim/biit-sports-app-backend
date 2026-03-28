@@ -11,6 +11,8 @@ const authRoutes = require('./routes/authRoutes')
 const testRoutes = require("./routes/testRoute")
 const healthRoutes = require("./routes/healthRoute")
 
+const userRoutes = require('./routes/userRoutes')
+
 var app = express();
 
 // view engine setup
@@ -27,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/biit/sports/auth', authRoutes)
 app.use('/biit/sports/test', testRoutes)
 app.use('/biit/sports/health', healthRoutes)
+
+app.use('/biit/sports/users', userRoutes)
 
 
 // catch 404 and forward to error handler
