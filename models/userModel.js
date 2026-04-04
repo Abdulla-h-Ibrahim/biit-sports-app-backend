@@ -5,6 +5,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  arid_no: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   age: {
     type: Number,
   },
@@ -19,6 +24,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
+    enum: ['player', 'coach', 'admin'], // keep consistent with FE values
+    default: 'player',
   },
   gender: {
     type: String,
@@ -27,7 +34,12 @@ const userSchema = new mongoose.Schema({
   profilePic: {
     type: String,
   },
-})
+});
+
+// Plain-text comparison
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return candidatePassword === this.password;
+};
 
 const User = mongoose.model('User', userSchema);
 
