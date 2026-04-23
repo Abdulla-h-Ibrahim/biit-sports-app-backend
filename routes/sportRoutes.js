@@ -1,7 +1,7 @@
 // routes/sportRoutes.js
 const express = require('express');
 const router = express.Router();
-const sportController = require('../controllers/sportsController');
+const sportController = require('../controllers/model controllers/sportsController');
 
 router.post('/', sportController.createSport);
 router.get('/', sportController.getAllSports);
