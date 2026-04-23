@@ -1,0 +1,71 @@
+RELATIONSHIPS
+| From           | To                    | Type        |
+| -------------- | --------------------- | ----------- |
+| User → Team    | many-to-many          | via members |
+| Team → Sport   | many-to-one           |             |
+| Match → Team   | many-to-one (2 teams) |             |
+| Match → Result | one-to-one            |             |
+
+1. User Collection
+| Field    | Type     | Key Type             |
+| -------- | -------- | -------------------- |
+| _id      | ObjectId | **Primary Key (PK)** |
+| arid_no  | String   | Unique               |
+| email    | String   | Unique               |
+| name     | String   | -                    |
+| password | String   | -                    |
+| role     | String   | -                    |
+
+2. Sport Collection
+| Field      | Type     | Key Type |
+| ---------- | -------- | -------- |
+| _id        | ObjectId | **PK**   |
+| name       | String   | Unique   |
+| type       | String   | -        |
+| minPlayers | Number   | -        |
+| maxPlayers | Number   | -        |
+
+3. Team Collection
+| Field     | Type     | Key Type            |
+| --------- | -------- | ------------------- |
+| _id       | ObjectId | **PK**              |
+| name      | String   | -                   |
+| sport     | ObjectId | **FK → Sport(_id)** |
+| createdBy | ObjectId | **FK → User(_id)**  |
+Embedded Members (Important)
+| Field        | Type     | Key Type           |
+| ------------ | -------- | ------------------ |
+| members.user | ObjectId | **FK → User(_id)** |
+| members.role | String   | -                  |
+
+4. Match Collection
+| Field      | Type     | Key Type            |
+| ---------- | -------- | ------------------- |
+| _id        | ObjectId | **PK**              |
+| game/sport | ObjectId | **FK → Sport(_id)** |
+| team1      | ObjectId | **FK → Team(_id)**  |
+| team2      | ObjectId | **FK → Team(_id)**  |
+| matchDate  | Date     | -                   |
+| status     | String   | -                   |
+
+5. Result Collection
+| Field       | Type     | Key Type                     |
+| ----------- | -------- | ---------------------------- |
+| _id         | ObjectId | **PK**                       |
+| match       | ObjectId | **FK → Match(_id)** (Unique) |
+| winner      | ObjectId | **FK → Team(_id)**           |
+| team1Score  | Number   | -                            |
+| team2Score  | Number   | -                            |
+| description | String   | -                            |
+
+RELATIONSHIP SUMMARY
+User (_id)
+   ↓
+Team.createdBy → User (_id)
+Team.members.user → User (_id)
+Team.sport → Sport (_id)
+Match.sport → Sport (_id)
+Match.team1 → Team (_id)
+Match.team2 → Team (_id)
+Result.match → Match (_id)
+Result.winner → Team (_id)
