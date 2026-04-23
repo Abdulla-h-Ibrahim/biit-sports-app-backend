@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -36,9 +38,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Plain-text comparison
 userSchema.methods.comparePassword = async function (candidatePassword) {
-  return candidatePassword === this.password;
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
