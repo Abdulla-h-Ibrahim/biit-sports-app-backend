@@ -1,19 +1,38 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const sportSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     unique: true,
+    trim: true,
   },
+
   type: {
     type: String,
-    enum: ['Team', 'Individual', 'Combo', 'Trio', 'Other'],
-    default: 'Other'
+    enum: ['team', 'individual', 'duo', 'trio'],
+    default: 'team',
   },
-  players: {
+
+  minPlayers: {
     type: Number,
-    min: 1,
-    default: 1
+    default: 1,
   },
-})
+
+  maxPlayers: {
+    type: Number,
+    required: true,
+  },
+
+  description: {
+    type: String,
+  },
+
+  isActive: {
+    type: Boolean,
+    default: true,
+  }
+
+}, { timestamps: true });
+
+module.exports = mongoose.model('Sport', sportSchema);

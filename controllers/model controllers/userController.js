@@ -1,5 +1,5 @@
-const User = require('../models/userModel');
-const DBConnection = require("../config/databaseConnection")
+const User = require('../../models/userModel');
+const DBConnection = require("../../config/databaseConnection")
 
 exports.createUser = async (req, res) => {
   const conn = await DBConnection();
