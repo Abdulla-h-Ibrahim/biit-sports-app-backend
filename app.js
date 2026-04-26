@@ -12,8 +12,11 @@ const authRoutes = require('./routes/authRoutes')
 const testRoutes = require("./routes/testRoute")
 const healthRoutes = require("./routes/healthRoute")
 
-const userRoutes = require('./routes/userRoutes')
-const sportRoutes = require('./routes/sportRoutes');
+const userRoutes = require('./routes/model Routes/userRoutes');
+const sportRoutes = require('./routes/model Routes/sportRoute');
+const teamRoutes = require('./routes/model Routes/teamRoute');
+const matchRoutes = require('./routes/model Routes/matchRoute');
+const resultRoutes = require('./routes/model Routes/resultRoute');
 
 var app = express();
 const baseURL = '/biit/sports';
@@ -37,6 +40,9 @@ app.use(`${baseURL}/health`, healthRoutes)
 
 app.use(`${baseURL}/users`, userRoutes)
 app.use(`${baseURL}/sport`, sportRoutes);
+app.use(`${baseURL}/team`, teamRoutes);
+app.use(`${baseURL}/match`, matchRoutes);
+app.use(`${baseURL}/result`, resultRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
