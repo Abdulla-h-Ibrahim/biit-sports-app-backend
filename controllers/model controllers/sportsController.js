@@ -1,4 +1,5 @@
 const Sport = require('../../models/sportModel');
+const DBConnection = require("../../config/databaseConnection")
 
 exports.createSport = async (req, res) => {
   const conn = await DBConnection();
