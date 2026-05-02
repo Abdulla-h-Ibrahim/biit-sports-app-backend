@@ -3,12 +3,24 @@ const Team = require('../../models/teamModel');
 const Sport = require('../../models/sportModel');
 const DBConnection = require('../../config/databaseConnection');
 
+async function resolveUserTeamIds(userId) {
+  if (!userId) return [];
+  const teams = await Team.find({ 'members.user': userId }).select('_id');
+  return teams.map((team) => team._id);
+}
 
 // Create Match
 exports.createMatch = async (req, res) => {
   const conn = await DBConnection();
   try {
-    const { sport, team1, team2, matchDate, venue, status } = req.body;
+    const { sport, team1, team2, matchDate, venue, status, requestedByRole } = req.body;
+
+    if (requestedByRole !== 'admin') {
+      return res.status(403).json({
+        status: 'fail',
+        message: 'Only admin can schedule matches',
+      });
+    }
 
     // Check sport exists
     const sportExists = await Sport.findById(sport);
@@ -57,6 +69,40 @@ exports.createMatch = async (req, res) => {
     res.status(500).json({
       status: 'fail',
       message: error.message
+    });
+  }
+};
+
+// Get scheduled matches based on role/user.
+exports.getScheduledMatches = async (req, res) => {
+  const conn = await DBConnection();
+  try {
+    const { userId, role } = req.query;
+    let filter = { status: 'scheduled' };
+
+    if (role !== 'admin' && userId) {
+      const userTeamIds = await resolveUserTeamIds(userId);
+      filter = {
+        ...filter,
+        $or: [{ team1: { $in: userTeamIds } }, { team2: { $in: userTeamIds } }],
+      };
+    }
+
+    const matches = await Match.find(filter)
+      .populate('sport')
+      .populate('team1')
+      .populate('team2')
+      .sort({ matchDate: 1 });
+
+    res.status(200).json({
+      status: 'success',
+      count: matches.length,
+      data: matches,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'fail',
+      message: error.message,
     });
   }
 };

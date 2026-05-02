@@ -12,11 +12,12 @@ const authRoutes = require('./routes/authRoutes')
 const testRoutes = require("./routes/testRoute")
 const healthRoutes = require("./routes/healthRoute")
 
-const userRoutes = require('./routes/model Routes/userRoutes');
-const sportRoutes = require('./routes/model Routes/sportRoute');
-const teamRoutes = require('./routes/model Routes/teamRoute');
-const matchRoutes = require('./routes/model Routes/matchRoute');
-const resultRoutes = require('./routes/model Routes/resultRoute');
+
+const userRoutes = require('./routes/model_Routes/userRoutes');
+const sportRoutes = require('./routes/model_Routes/sportRoute');
+const teamRoutes = require('./routes/model_Routes/teamRoute');
+const matchRoutes = require('./routes/model_Routes/matchRoute');
+const resultRoutes = require('./routes/model_Routes/resultRoute');
 
 var app = express();
 const baseURL = '/biit/sports';

@@ -35,4 +35,18 @@ const sportSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
+sportSchema.pre('validate', function () {
+  if (this.minPlayers < 1) {
+    throw new Error('minPlayers must be at least 1');
+  }
+
+  if (this.maxPlayers < this.minPlayers) {
+    throw new Error('maxPlayers must be greater than or equal to minPlayers');
+  }
+
+  if (this.type !== 'team' && this.maxPlayers > 1) {
+    throw new Error('Only team sports can have more than 1 player');
+  }
+});
+
 module.exports = mongoose.model('Sport', sportSchema);

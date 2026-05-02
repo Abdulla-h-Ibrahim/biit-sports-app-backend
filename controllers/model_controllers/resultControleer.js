@@ -1,6 +1,6 @@
 const DBConnection = require('../../config/databaseConnection');
-const Result = require('../models/Result');
-const Match = require('../models/Match');
+const Result = require('../../models/resultModel');
+const Match = require('../../models/matchModel');
 
 // Create Result
 exports.createResult = async (req, res) => {

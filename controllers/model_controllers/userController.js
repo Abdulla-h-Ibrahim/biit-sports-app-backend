@@ -1,3 +1,4 @@
+  const mongoose = require('mongoose');
   const User = require('../../models/userModel');
   const DBConnection = require("../../config/databaseConnection")
 
@@ -41,6 +42,13 @@
     const conn = await DBConnection();
 
     try {
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+          status: 'fail',
+          message: 'Invalid user id format'
+        });
+      }
+
       const user = await User.findById(req.params.id);
       if (!user) {
         return res.status(404).json({
@@ -65,6 +73,13 @@
   exports.updateUserById = async (req, res) => {
     const conn = await DBConnection();
     try {
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+          status: 'fail',
+          message: 'Invalid user id format'
+        });
+      }
+
       const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
       if (!user) {
         return res.status(404).json({
@@ -89,6 +104,13 @@
   exports.deleteUserById = async (req, res) => {
     const conn = await DBConnection();
     try {
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({
+          status: 'fail',
+          message: 'Invalid user id format'
+        });
+      }
+
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user) {
         return res.status(404).json({

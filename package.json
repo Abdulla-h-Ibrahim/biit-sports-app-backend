@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "seed:dummy": "node ./scripts/seedDummyData.js",
+    "import:players": "node ./scripts/importProvidedPlayers.js",
+    "set:abdullah-admin": "node ./scripts/setAbdullahIbrahimAdmin.js",
+    "clear:invites": "node ./scripts/clearInvites.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

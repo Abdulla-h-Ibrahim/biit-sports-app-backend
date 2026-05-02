@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const resultController = require('../../controllers/model controllers/resultController');
+const resultController = require('../../controllers/model_controllers/resultControleer');
 
 router.post('/', resultController.createResult);
 router.get('/', resultController.getAllResults);

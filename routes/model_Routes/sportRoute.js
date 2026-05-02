@@ -7,7 +7,7 @@ const {
   getSportById,
   updateSport,
   deleteSport
-} = require('../../controllers/model controllers/sportController');
+} = require('../../controllers/model_controllers/sportsController');
 
 router.post('/', createSport);
 router.get('/', getAllSports);

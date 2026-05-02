@@ -4,7 +4,23 @@ const DBConnection = require("../../config/databaseConnection")
 exports.createSport = async (req, res) => {
   const conn = await DBConnection();
   try {
-    const sport = new Sport(req.body);
+    const {
+      name,
+      type = 'team',
+      minPlayers = 1,
+      maxPlayers,
+      description = '',
+      isActive = true
+    } = req.body;
+
+    const sport = new Sport({
+      name,
+      type,
+      minPlayers,
+      maxPlayers,
+      description,
+      isActive
+    });
     await sport.save();
     res.status(201).json({ success: true, data: sport });
   } catch (error) {
@@ -15,6 +31,7 @@ exports.createSport = async (req, res) => {
 exports.getAllSports = async (req, res) => {
   const conn = await DBConnection();
   try {
+    res.set('Cache-Control', 'no-store');
     const sports = await Sport.find();
     res.status(200).json({ success: true, data: sports });
   } catch (error) {
@@ -25,6 +42,7 @@ exports.getAllSports = async (req, res) => {
 exports.getSportById = async (req, res) => {
   const conn = await DBConnection();
   try {
+    res.set('Cache-Control', 'no-store');
     const sport = await Sport.findById(req.params.id);
     if (!sport) {
       return res.status(404).json({ success: false, message: 'Sport not found' });
